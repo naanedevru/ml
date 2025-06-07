@@ -1,5 +1,6 @@
 #1
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.datasets import fetch_california_housing
@@ -7,24 +8,23 @@ from sklearn.datasets import fetch_california_housing
 # Load the California Housing dataset
 data = fetch_california_housing(as_frame=True).data
 
-# Plot histograms and box plots for all features
+# Create histograms for all numerical features
 for column in data.columns:
-    fig, axs = plt.subplots(1, 2, figsize=(14, 5))
+    plt.figure(figsize=(8, 5))
+    plt.hist(data[column], bins=30, color='skyblue', edgecolor='black')
+    plt.title(f'Distribution of {column}')
+    plt.xlabel(column)
+    plt.ylabel('Frequency')
+    plt.grid()
+    plt.show()
 
-    # Histogram
-    axs[0].hist(data[column], bins=30, color='skyblue', edgecolor='black')
-    axs[0].set_title(f'Distribution of {column}')
-    axs[0].set_xlabel(column)
-    axs[0].set_ylabel('Frequency')
-    axs[0].grid()
-
-    # Box Plot
-    sns.boxplot(x=data[column], ax=axs[1], color='skyblue')
-    axs[1].set_title(f'Box Plot of {column}')
-    axs[1].set_xlabel(column)
-    axs[1].grid()
-
-    plt.tight_layout()
+# Generate box plots for all numerical features
+for column in data.columns:
+    plt.figure(figsize=(8, 5))
+    sns.boxplot(data[column], color='skyblue')
+    plt.title(f'Box Plot of {column}')
+    plt.xlabel(column)
+    plt.grid()
     plt.show()
 
 # Analyze and print potential outliers
